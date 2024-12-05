@@ -42,8 +42,9 @@ async function createDroneCard(drone) {
   topRightImages.appendChild(droneLink);
   const droneImage = document.createElement("img");
   droneImage.classList.add("drone");
-  droneImage.src = "./icons/drone.svg";
+  droneImage.src = "./icons/screw-driver.svg";
   droneLink.appendChild(droneImage);
+  // <a><img class="compare" src="./icons/compare.svg" /></a>
   const compareLink = document.createElement("a");
   compareLink.href = "#";
   topRightImages.appendChild(compareLink);
@@ -51,6 +52,14 @@ async function createDroneCard(drone) {
   compareImage.classList.add("compare");
   compareImage.src = "./icons/compare.svg";
   compareLink.appendChild(compareImage);
+  // <a><img class="add_to_analitic" src="./icons/plus.svg" /></a>
+  const addLink = document.createElement("a");
+  addLink.href = "#";
+  topRightImages.appendChild(addLink);
+  const addImage = document.createElement("img");
+  addImage.classList.add("add_to_analitic");
+  addImage.src = "./icons/plus.svg";
+  addLink.appendChild(addImage);
   images.appendChild(topRightImages);
   const text = document.createElement("div");
   text.classList.add("text");
