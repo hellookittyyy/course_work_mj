@@ -24,7 +24,7 @@ async function createDroneCard(drone) {
     response.json()
   );
 
-  const data = language[lang.toLowerCase()];
+  const data = language[lang];
   const currency = data.currency;
   const amountText = data.amount;
 
@@ -107,8 +107,8 @@ async function sort() {
 function getCurrentLanguage() {
   const lang = localStorage.getItem("lang");
   if (!lang) {
-    localStorage.setItem("lang", "ua");
-    return "ua";
+    localStorage.setItem("lang", "UA");
+    return "UA";
   }
 
   return lang;
@@ -131,7 +131,7 @@ async function loadLanguage() {
     response.json()
   );
 
-  const data = language[lang.toLowerCase()];
+  const data = language[lang];
   console.log(data);
 
   Object.keys(data).forEach((key) => {

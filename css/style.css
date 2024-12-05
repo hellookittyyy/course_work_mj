@@ -55,7 +55,7 @@ main {
   background-color: var(--light-gray);
   text-align: center;
   height: 40px;
-  color: var(--white);
+  color: var(--text-color);
   font-size: 24px;
   width: 250px;
 }
@@ -70,6 +70,7 @@ main {
 
 .sort option {
   background-color: var(--dark-gray);
+  color: var(--white);
   font-size: 18px;
   height: 200px;
 }

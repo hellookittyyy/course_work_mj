@@ -34,9 +34,6 @@ header img {
   border-radius: 30px;
   width: 600px;
   padding: 10px 30px;
-  font-family: var(--font-main);
-  font-size: 30px;
-  color: var(--text-color);
 }
 
 .search img {
