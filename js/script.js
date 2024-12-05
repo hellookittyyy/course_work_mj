@@ -1,10 +1,9 @@
 async function loadPage() {
   checkTheme();
 
-  if (
-    window.location.pathname === "/" ||
-    window.location.pathname === "/index.html"
-  ) {
+  const page = document.getElementById("index_page");
+
+  if (page) {
     const drones = await fetch("./items.json").then((response) =>
       response.json()
     );
@@ -81,6 +80,7 @@ async function createDroneCard(drone) {
   droneCard.appendChild(images);
   droneCard.appendChild(text);
   document.querySelector(".drones").appendChild(droneCard);
+  console.log("Drones:" + document.querySelector(".drones"));
 }
 
 async function sort() {
@@ -166,4 +166,5 @@ function changeTheme() {
   }
 }
 
-window.addEventListener("load", loadPage);
+// window.addEventListener("load", loadPage);
+document.addEventListener("DOMContentLoaded", loadPage);
