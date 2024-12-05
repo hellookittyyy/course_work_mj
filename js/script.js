@@ -144,10 +144,11 @@ async function loadLanguage() {
   console.log(data);
 
   Object.keys(data).forEach((key) => {
-    const element = document.getElementById("lang-" + key);
-    if (element) {
+    const elements = document.querySelectorAll(`[id="lang-${key}"]`);
+
+    elements.forEach((element) => {
       element.innerHTML = data[key];
-    }
+    });
   });
 }
 
