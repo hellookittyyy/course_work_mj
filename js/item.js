@@ -17,7 +17,7 @@ async function loadInfo() {
     response.json()
   );
 
-  const data = language[lang.toLowerCase()];
+  const data = language[lang];
   const currency = data.currency;
   const priceText = data.price;
   document.getElementById("lang-price").innerHTML = priceText;
