@@ -64,7 +64,6 @@ async function drawSearchResults(filteredDrones) {
 
     filteredDrones.forEach((filteredDrones) => {
       const a = document.createElement("a");
-      // add class
       a.id = "searchResultItem";
       a.onclick = () =>
         (window.location.href = `./item.html?id=${filteredDrones.id}&type=drones`);
