@@ -19,7 +19,10 @@
           const lang = getCurrentLanguage();
           setHeaderLang(lang);
         });
-        $("#navigation").load("./components/menu.html");
+        $("#navigation").load("./components/menu.html", function () {
+          const lang = getCurrentLanguage();
+          loadLanguage();
+        });
       });
     </script>
     <link rel="stylesheet" href="css/variables.css" />
