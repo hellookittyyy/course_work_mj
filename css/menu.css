@@ -1,6 +1,7 @@
 .menu {
   margin-top: 100px;
   display: flex;
+  flex-direction: column;
   background-color: var(--light-gray);
   position: fixed;
   height: calc(100vh - 100px);
@@ -13,6 +14,7 @@
 .menu ul {
   list-style-type: none;
   width: 100%;
+  font-weight: 600;
 }
 
 .menu li {
@@ -28,5 +30,21 @@
 }
 
 .menu a {
-  line-height: 100px;
+  line-height: 70px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+#components_types li {
+  height: 50px;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 32px;
+  text-indent: 40px;
+}
+
+#components_types li a {
+  line-height: 50px;
 }
