@@ -26,6 +26,22 @@ async function loadInfo() {
     response.json()
   );
 
+  if (outputItems === "drones") {
+    const statuses = await getStatusesAsync();
+    const statusSelect = document.getElementById("status");
+    statusSelect.classList.remove("hidden");
+    statusSelect.onchange = () =>
+      updateStatusAsync(currentItem.id, statusSelect.value);
+
+    for (let i = 0; i < statuses.length; i++) {
+      const option = document.createElement("option");
+      option.value = statuses[i].id;
+      option.textContent = statuses[i][lang.toLowerCase()];
+      statusSelect.appendChild(option);
+    }
+    statusSelect.value = currentItem.status;
+  }
+
   const data = language[lang];
   const currency = data.currency;
   const priceText = data.price;

@@ -54,7 +54,7 @@ main {
   color: var(--text-color);
 }
 
-#sort {
+.sortes {
   border: 3px solid var(--light-gray);
   border-radius: 18px;
   background-color: var(--light-gray);
@@ -207,4 +207,12 @@ main {
   display: flex;
   flex-direction: row;
   gap: 40px;
+}
+
+#status {
+  background-color: var(--light-gray);
+  border: 1px solid var(--dark-gray);
+  border-radius: 18px;
+  text-align: center;
+  max-width: 200px;
 }

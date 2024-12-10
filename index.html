@@ -32,10 +32,24 @@
       <!-- CONTENT -->
       <div class="content">
         <div class="sort">
+          <label class="lato-regular" for="status" id="lang-status">
+            Статус:
+          </label>
+          <select
+            class="lato-light sortes hidden"
+            name="status"
+            id="status-filter"
+            onchange="sort()">
+            <option class="lato-light" value="all" id="lang-all">All</option>
+          </select>
           <label class="lato-regular" for="sort" id="lang-sort">
             Сортування:
           </label>
-          <select class="lato-light" name="sort" id="sort" onchange="sort()">
+          <select
+            class="lato-light sortes"
+            name="sort"
+            id="sort"
+            onchange="sort()">
             <option class="lato-light" value="rating" id="lang-rating">
               за рейтингом
             </option>

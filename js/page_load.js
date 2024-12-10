@@ -41,4 +41,6 @@ async function includeComponents() {
       tempDiv.innerHTML = html;
       return tempDiv.innerHTML;
     });
+
+  devMode("127.0.0.1");
 }

@@ -1,23 +1,41 @@
 const MAX_ITEMS_PER_PAGE = 6;
 
 async function loadPage() {
+  devMode("http://127.0.0.1/");
   checkTheme();
 
   const page = document.getElementById("index_page");
 
   if (page) {
-    const items = await fetch("./items.json").then((response) =>
-      response.json()
-    );
+    const lang = getCurrentLanguage();
 
+    const statuses = await getStatusesAsync();
     const params = getAddressParameters();
+    const type = params.type ? params.type.toLowerCase() : "drones";
+    if (type == "drones") {
+      const statusFilter = document.getElementById("status-filter");
+      statusFilter.classList.remove("hidden");
+      const langStatusFilter = document.getElementById("lang-status");
+      langStatusFilter.classList.remove("hidden");
 
-    let outputItems = params.type ? params.type.toLowerCase() : "drones";
-    let page = params.page ? params.page : 1;
-    let pages = Math.ceil(items[outputItems].length / MAX_ITEMS_PER_PAGE);
+      if (statusFilter && statusFilter.childElementCount == 1) {
+        statusFilter.innerHTML = "";
+        const allOption = document.createElement("option");
+        allOption.id = "all";
+        allOption.selected = true;
+        allOption.value = "all";
+        allOption.text = "All";
+        statusFilter.appendChild(allOption);
+        statuses.forEach((status) => {
+          const option = document.createElement("option");
+          option.value = status.id;
+          option.text = status[lang.toLowerCase()];
+          statusFilter.appendChild(option);
+        });
+      }
+    }
 
-    drawPagination(pages, page);
-    drawItemCards(page, items[outputItems]);
+    sort();
   }
 
   await loadLanguage();
@@ -113,13 +131,22 @@ async function createItemCard(item) {
   price.textContent = `${item.price} `;
   price.appendChild(currencySpan);
   info.appendChild(price);
-  const amount = document.createElement("p");
-  amount.textContent = `${item.amount} `;
-  const amountSpan = document.createElement("span");
-  amountSpan.id = "lang-amount";
-  amountSpan.textContent = amountText;
-  amount.appendChild(amountSpan);
-  info.appendChild(amount);
+  if (outputItems === "drones") {
+    const statuses = await getStatusesAsync();
+    const statusSelect = document.createElement("select");
+    statusSelect.id = "status";
+    statusSelect.onchange = () =>
+      updateStatusAsync(item.id, statusSelect.value);
+    for (let i = 0; i < statuses.length; i++) {
+      const option = document.createElement("option");
+      option.value = statuses[i].id;
+      option.textContent = statuses[i][lang.toLowerCase()];
+      statusSelect.appendChild(option);
+    }
+    statusSelect.value = item.status;
+    info.appendChild(statusSelect);
+  }
+
   text.appendChild(info);
   itemCard.appendChild(images);
   itemCard.appendChild(text);
@@ -133,6 +160,7 @@ function drawPagination(pages, page) {
   for (let i = 1; i <= pages; i++) {
     const button = document.createElement("button");
     button.textContent = i;
+
     button.onclick = () => {
       const url = new URL(window.location.href);
       url.searchParams.set("page", i);
@@ -146,12 +174,28 @@ function drawPagination(pages, page) {
   }
 }
 
-async function sort() {
-  const drones = await fetch("./items.json").then((response) =>
+async function getFilteredDronesAsync() {
+  const filter = document.querySelector("#status-filter").value;
+  const allItems = await fetch("./items.json").then((response) =>
     response.json()
   );
+
+  const params = getAddressParameters();
+  let outputItems = params.type ? params.type.toLowerCase() : "drones";
+  const items = allItems[outputItems];
+
+  if (filter === "all") {
+    return items;
+  } else {
+    return items.filter((item) => item.status === parseInt(filter));
+  }
+}
+
+async function sort() {
+  const drones = await getFilteredDronesAsync();
+
   const sortType = document.querySelector("#sort").value;
-  const sortedDrones = drones.drones.sort((a, b) => {
+  const sortedDrones = drones.sort((a, b) => {
     if (sortType === "rating") {
       return b.rating - a.rating;
     } else if (sortType === "descending") {
@@ -164,6 +208,16 @@ async function sort() {
   const params = getAddressParameters();
   let page = params.page ? params.page : 1;
 
+  const pages = Math.ceil(sortedDrones.length / MAX_ITEMS_PER_PAGE);
+  if (page > pages) {
+    page = pages;
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", page);
+    window.history.pushState({}, "", url);
+    loadPage(page);
+  }
+
+  drawPagination(pages, page);
   drawItemCards(page, sortedDrones);
 }
 

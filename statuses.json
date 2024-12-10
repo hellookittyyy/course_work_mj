@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "ua": "Замовлено компоненти",
+    "en": "Ordered components"
+  },
+  {
+    "id": 2,
+    "ua": "В процесі збірки",
+    "en": "Assembly in progress"
+  },
+  {
+    "id": 3,
+    "ua": "Зібрано",
+    "en": "Assembly completed"
+  },
+  {
+    "id": 4,
+    "ua": "Передано",
+    "en": "Sent"
+  }
+]

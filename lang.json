@@ -33,7 +33,9 @@
     "pigtails": "Пігтейли",
     "voopes": "Вупи",
     "recievers": "Ресівери",
-    "equipment": "Обладнання"
+    "equipment": "Обладнання",
+    "all": "Всі",
+    "status": "Статус"
   },
   "EN": {
     "language": "English",
@@ -69,6 +71,8 @@
     "pigtails": "Pigtails",
     "voopes": "Voopes",
     "recievers": "Recievers",
-    "equipment": "Equipment"
+    "equipment": "Equipment",
+    "all": "All",
+    "status": "Status"
   }
 }
