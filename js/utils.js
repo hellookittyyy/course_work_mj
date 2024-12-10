@@ -9,3 +9,13 @@ function getAddressParameters() {
 
   return parameters;
 }
+
+function getCurrentLanguage() {
+  const lang = localStorage.getItem("lang");
+  if (!lang) {
+    localStorage.setItem("lang", "UA");
+    return "UA";
+  }
+
+  return lang;
+}

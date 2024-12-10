@@ -1,3 +1,5 @@
+const MAX_ITEMS_PER_PAGE = 6;
+
 async function loadPage() {
   checkTheme();
 
@@ -12,21 +14,25 @@ async function loadPage() {
 
     let outputItems = params.type ? params.type.toLowerCase() : "drones";
     let page = params.page ? params.page : 1;
-    const maxItemsPerPage = 6;
-    let pages = Math.ceil(items[outputItems].length / maxItemsPerPage);
+    let pages = Math.ceil(items[outputItems].length / MAX_ITEMS_PER_PAGE);
+
     drawPagination(pages, page);
-    document.querySelector(".drones").innerHTML = "";
-    for (
-      let i = (page - 1) * maxItemsPerPage;
-      i < Math.min(page * maxItemsPerPage, items[outputItems].length);
-      i++
-    ) {
-      const drone = items[outputItems][i];
-      createItemCard(drone);
-    }
+    drawItemCards(page, items[outputItems]);
   }
 
   await loadLanguage();
+}
+
+function drawItemCards(page, items) {
+  document.querySelector(".drones").innerHTML = "";
+  for (
+    let i = (page - 1) * MAX_ITEMS_PER_PAGE;
+    i < Math.min(page * MAX_ITEMS_PER_PAGE, items.length);
+    i++
+  ) {
+    const item = items[i];
+    createItemCard(item);
+  }
 }
 
 async function createItemCard(item) {
@@ -144,46 +150,26 @@ async function sort() {
   const drones = await fetch("./items.json").then((response) =>
     response.json()
   );
-
+  const sortType = document.querySelector("#sort").value;
   const sortedDrones = drones.drones.sort((a, b) => {
-    if (document.querySelector("#sort").value === "rating") {
+    if (sortType === "rating") {
       return b.rating - a.rating;
-    } else if (document.querySelector("#sort").value === "descending") {
+    } else if (sortType === "descending") {
       return b.price - a.price;
-    } else if (document.querySelector("#sort").value === "ascending") {
+    } else if (sortType === "ascending") {
       return a.price - b.price;
     }
   });
 
   const params = getAddressParameters();
-
   let page = params.page ? params.page : 1;
-  const maxItemsPerPage = 6;
 
-  document.querySelector(".drones").innerHTML = "";
-  for (
-    let i = (page - 1) * maxItemsPerPage;
-    i < Math.min(page * maxItemsPerPage, sortedDrones.length);
-    i++
-  ) {
-    const drone = sortedDrones[i];
-    createItemCard(drone);
-  }
-}
-
-function getCurrentLanguage() {
-  const lang = localStorage.getItem("lang");
-  if (!lang) {
-    localStorage.setItem("lang", "UA");
-    return "UA";
-  }
-
-  return lang;
+  drawItemCards(page, sortedDrones);
 }
 
 function setHeaderLang(lang) {
   const langSwitch = document.getElementById("language");
-  console.log(langSwitch);
+
   if (langSwitch) {
     langSwitch.value = lang;
   }
@@ -218,7 +204,9 @@ function changeLanguage() {
 
 function checkTheme() {
   const theme = localStorage.getItem("theme");
-  if (theme === "dark") {
+  const body = document.querySelector("body");
+
+  if (theme === "dark" && !body.classList.contains("dark-theme")) {
     changeTheme();
   }
 }

@@ -12,8 +12,6 @@ async function includeComponents() {
     .then((html) => {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = html;
-      // const lang = getCurrentLanguage();
-      // setHeaderLang(lang);
       return tempDiv.innerHTML;
     });
 
